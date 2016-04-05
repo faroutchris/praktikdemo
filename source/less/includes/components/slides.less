@@ -1,0 +1,24 @@
+@slide-maxheight: 600px;
+
+.slick-slide {
+  .row();
+  height: @slide-maxheight;
+  outline: none;
+
+  .content-image{
+    .column(6);
+
+    img {
+      max-height: @slide-maxheight;
+      margin: 0 auto;
+    }
+  }
+
+  .content-info{
+    .column(6);
+
+    position: absolute;
+    top: 80%;
+    transform: translateY(-100%);
+  }
+}

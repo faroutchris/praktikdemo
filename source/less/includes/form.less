@@ -1,0 +1,48 @@
+form {
+  & *:focus {
+    //outline: none;
+    //border-color: darken(@color-gray3, 20);
+    //box-shadow: 0 0 10px rgba(0,0,0,0.2);
+
+  }
+}
+
+label {
+  display: block;
+  line-height: 2;
+}
+
+textarea,
+input {
+  line-height: normal;
+  display: block;
+  font-size: 16px;
+  padding: 8px;
+
+  border: 1px solid @color-gray3;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"],
+textarea {
+  width: 100%;
+}
+
+input[type="number"] {
+  width: 42px;
+
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+}
+
+input[type="submit"] {
+  display: inline-block;
+}

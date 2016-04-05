@@ -1,0 +1,60 @@
+header {
+  .mixin-section();
+  background: url('/images/Header-resize.jpg'), @color-basedark;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: top center;
+  height: 150px;
+
+  a:hover {
+    color: darken(@color-textinvert, 15);
+    text-decoration: none;
+  }
+
+  .container {
+    .container(0);
+  }
+
+  .wrapper {
+    .column(12);
+    position: absolute;
+    bottom: 20px;
+  }
+
+}
+
+
+.logo-block {
+  width: 160px;
+  display: inline-block;
+}
+
+.cart-block {
+  float: right;
+
+  a {
+    color: @color-textinvert;
+    font-size: 16px;
+    font-weight: 300;
+    display: inline-block;
+    text-transform: uppercase;
+    position: relative;
+
+    img {
+      vertical-align: middle;
+      margin-left: 10px;
+    }
+
+    span {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40px;
+      text-align: center;
+      color: @color-base;
+      font-weight: bold;
+      font-size: 13px;
+      padding: 5px 0;
+    }
+  }
+}

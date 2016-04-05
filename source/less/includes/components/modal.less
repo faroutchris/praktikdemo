@@ -1,0 +1,33 @@
+@modal-height: 600px;
+@modal-total-width: 300px;
+@modal-ear-width: 40px;
+@modal-body-width: @modal-total-width - @modal-ear-width;
+
+.modal {
+  height: @modal-height;
+  width: @modal-total-width;
+  position: absolute;
+  z-index: 1;
+  top: 40px;
+  right: -@modal-body-width;
+  transition: all 0.3s ease-in-out;
+
+
+  .modal-ear {
+    position: relative;
+    float: left;
+    height: @modal-height;
+    width: @modal-ear-width;
+    background: url('/images/subscribe.png'), linear-gradient(180deg, @color-base, @color-basedark);
+
+    h2 {
+      display: none;
+    }
+  }
+  .modal-body {
+    float: left;
+    height: @modal-height;
+    width: @modal-body-width;
+    background: linear-gradient(0, @color-gray1, @color-gray2);
+  }
+}
