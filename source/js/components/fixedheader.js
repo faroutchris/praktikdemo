@@ -11,10 +11,11 @@ function FixedHeader($nav, $header) {
     this.navHeight = $nav.height();
     this.fixed = false
 
+    this.init();
 }
 
 FixedHeader.prototype = {
-    initListeners: function initListeners() {
+    init: function initListeners() {
         $(document).on( 'scroll', this._onScroll.bind(this) );
     },
 
@@ -30,7 +31,7 @@ FixedHeader.prototype = {
         }
     },
 
-    _onChange: function(shouldFix) {
+    _onChange: function _onChange(shouldFix) {
         if( shouldFix !== this.fixed ) {
             this.fixed = shouldFix;
 
@@ -41,7 +42,7 @@ FixedHeader.prototype = {
         return false;
     },
 
-    _fix: function($nav, $header) {
+    _fix: function _fix($nav, $header) {
         $nav.css({
             'position': 'fixed',
             'top': 0,
@@ -53,7 +54,7 @@ FixedHeader.prototype = {
         });
     },
 
-    _unfix: function($nav, $header) {
+    _unfix: function _unfix($nav, $header) {
         $nav.css({
             'position': 'relative'
         });
@@ -68,5 +69,4 @@ export default $(document).ready( () => {
     const $nav = $('nav');
     const $header = $('header');
     const fixedHeader = new FixedHeader($nav, $header);
-    fixedHeader.initListeners();
 });

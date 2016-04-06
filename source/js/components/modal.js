@@ -5,7 +5,6 @@ function Modal($modal) {
     this.$ear = this.$modal.find('.modal-ear');
     this.$body = this.$modal.find('.modal-body');
     this.rightOffset = this.$modal.css(['right']).right;
-    this.rightPos = this.rightOffset;
     this.isOpen = false;
 
     this.init();
@@ -24,14 +23,22 @@ Modal.prototype = {
 
     update: function update(isOpen) {
         if (isOpen) {
-            this.$modal.css({
-                'transform': 'translate3d('+ this.rightOffset +', 0, 0)'
-            })
+            this.open();
         } else {
-            this.$modal.css({
-                'transform': 'translate3d(0, 0, 0)'
-            })
+            this.close();
         }
+    },
+
+    open: function open() {
+        this.$modal.css({
+            'transform': 'translate3d('+ this.rightOffset +', 0, 0)'
+        })
+    },
+
+    close: function close() {
+        this.$modal.css({
+            'transform': 'translate3d(0, 0, 0)'
+        })
     }
 
 
@@ -39,7 +46,9 @@ Modal.prototype = {
 
 export default $(document).ready( () => {
 
-    //const $modal = $(".modal");
-    //const modal = new Modal($modal);
+    const $modal = $(".modal");
+    if ($modal.length) { //Check if the modal exists on the page
+        const modal = new Modal($modal);
+    }
 
 });

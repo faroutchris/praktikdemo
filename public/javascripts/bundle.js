@@ -12583,10 +12583,12 @@ function FixedHeader($nav, $header) {
     this.headerHeight = $header.height();
     this.navHeight = $nav.height();
     this.fixed = false;
+
+    this.init();
 }
 
 FixedHeader.prototype = {
-    initListeners: function initListeners() {
+    init: function initListeners() {
         (0, _jquery2.default)(document).on('scroll', this._onScroll.bind(this));
     },
 
@@ -12638,7 +12640,6 @@ exports.default = (0, _jquery2.default)(document).ready(function () {
     var $nav = (0, _jquery2.default)('nav');
     var $header = (0, _jquery2.default)('header');
     var fixedHeader = new FixedHeader($nav, $header);
-    fixedHeader.initListeners();
 });
 
 },{"jquery":1}],5:[function(require,module,exports){
@@ -12659,7 +12660,6 @@ function Modal($modal) {
     this.$ear = this.$modal.find('.modal-ear');
     this.$body = this.$modal.find('.modal-body');
     this.rightOffset = this.$modal.css(['right']).right;
-    this.rightPos = this.rightOffset;
     this.isOpen = false;
 
     this.init();
@@ -12678,23 +12678,33 @@ Modal.prototype = {
 
     update: function update(isOpen) {
         if (isOpen) {
-            this.$modal.css({
-                'transform': 'translate3d(' + this.rightOffset + ', 0, 0)'
-            });
+            this.open();
         } else {
-            this.$modal.css({
-                'transform': 'translate3d(0, 0, 0)'
-            });
+            this.close();
         }
+    },
+
+    open: function open() {
+        this.$modal.css({
+            'transform': 'translate3d(' + this.rightOffset + ', 0, 0)'
+        });
+    },
+
+    close: function close() {
+        this.$modal.css({
+            'transform': 'translate3d(0, 0, 0)'
+        });
     }
 
 };
 
 exports.default = (0, _jquery2.default)(document).ready(function () {
 
-    //const $modal = $(".modal");
-    //const modal = new Modal($modal);
-
+    var $modal = (0, _jquery2.default)(".modal");
+    if ($modal.length) {
+        //Check if the modal exists on the page
+        var modal = new Modal($modal);
+    }
 });
 
 },{"jquery":1}],6:[function(require,module,exports){
@@ -12710,11 +12720,14 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function NumberInput(inputs) {
+function NumberInput($input) {
 
-    this.inputs = inputs;
-    this.plus = (0, _jquery2.default)('<div>').html('+');
-    this.minus = (0, _jquery2.default)('<div>').html('-');
+    this.$input = $input;
+    this.min = this.$input.attr('min') || null;
+    this.max = this.$input.attr('max') || null;
+    this.current = this.$input.val() || this.$input.val(this.min);
+    this.plus = (0, _jquery2.default)('<div>').addClass('input-number-plus').html('+');
+    this.minus = (0, _jquery2.default)('<div>').addClass('input-number-minus').html('-');
 
     this.init();
 }
@@ -12723,17 +12736,66 @@ NumberInput.prototype = {
     init: function init() {
         var _this = this;
 
-        this.inputs.each(function (i, input) {
+        this.plus.insertAfter(this.$input);
+        this.minus.insertAfter(this.$input);
 
-            (0, _jquery2.default)(input).append(_this.plus);
+        this.plus.on('click', function () {
+            if (_this.max === null) {
+                //No max set
+                _this.updateValue('add');
+            } else if (_this.current < _this.max) {
+                _this.updateValue('add');
+            } else {
+                //Maybe animate some property? Flash the border red?
+                return false;
+            }
         });
+
+        this.minus.on('click', function () {
+            if (_this.min === null) {
+                //No min set
+                _this.updateValue('subtract');
+            } else if (_this.current > _this.min) {
+                _this.updateValue('subtract');
+            } else {
+                return false;
+            }
+        });
+    },
+
+    updateValue: function updateValue(action) {
+        switch (action) {
+            case 'add':
+                {
+                    this.current = this.$input.val();
+                    var next = Number(this.current) + 1;
+                    this.$input.val(next);
+                    this.current = next;
+                    break;
+                }
+            case 'subtract':
+                {
+                    this.current = this.$input.val();
+                    var _next = Number(this.current) - 1;
+                    this.$input.val(_next);
+                    this.current = _next;
+                    this.current = _next;
+                    break;
+                }
+            default:
+                return false;
+        }
     }
+
 };
 
 exports.default = (0, _jquery2.default)(document).ready(function () {
 
     var inputs = (0, _jquery2.default)(document).find('input[type="number"]');
-    var numberInput = new NumberInput(inputs);
+    inputs.each(function (i, input) {
+        var $input = (0, _jquery2.default)(input);
+        var numberInput = new NumberInput($input);
+    });
 });
 
 },{"jquery":1}],7:[function(require,module,exports){
